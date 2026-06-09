@@ -38,3 +38,19 @@ def initialize_database(db_path: Path = Path("data/tracker.db")) -> None:
             weeks_of_data INTEGER NOT NULL
         );
     """)
+        
+def save_log_entry(
+        user_id: int,
+        log_date: str,
+        weight_lbs: float,
+        calories: int,
+        protein_g: int,
+        steps: int = None,
+        notes: str = None,
+        db_path: Path = Path("data/tracker.db")
+) -> None:
+    with get_db_connection(db_path) as conn:
+        conn.execute(
+            "INSERT INTO daily_log (user_id, log_date, weight_lbs, calories, protein_g, steps, notes) VALUES (?,?,?,?,?,?,?)",
+            (user_id, log_date, weight_lbs, calories, protein_g, steps, notes)
+        )
