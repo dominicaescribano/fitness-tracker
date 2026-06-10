@@ -54,3 +54,18 @@ def save_log_entry(
             "INSERT INTO daily_log (user_id, log_date, weight_lbs, calories, protein_g, steps, notes) VALUES (?,?,?,?,?,?,?)",
             (user_id, log_date, weight_lbs, calories, protein_g, steps, notes)
         )
+
+def get_weights_for_user(
+        user_id: int,
+        limit: int = 30,
+        db_path: Path = Path("data/tracker.db")
+) -> list[tuple]:
+    with get_db_connection(db_path) as conn:
+        result = conn.execute(
+            """SELECT weight_lbs, log_date FROM daily_log 
+            WHERE user_id = ?
+            ORDER BY log_date DESC
+            LIMIT ?""",
+            (user_id, limit)
+        )
+        return result.fetchall()
