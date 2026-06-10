@@ -31,3 +31,28 @@ def calculate_rolling_average(
         return None
     
     return sum(weights[-window:]) / window
+
+def estimate_confidence(
+        weeks_of_data: int
+) -> float:
+    if weeks_of_data < 1:
+        return 0.0
+    elif weeks_of_data == 1:
+        return 0.5
+    elif weeks_of_data == 2:
+        return 0.7
+    elif weeks_of_data == 3:
+        return 0.85
+    else:
+        return 1.0
+    
+def project_weight(
+        current_weight_lbs: float,
+        estimated_tdee: float,
+        average_daily_calories: float,
+        days: int = 30
+) -> float:
+    net_caloric_gain = (average_daily_calories - estimated_tdee) * days
+    net_weight_gain = net_caloric_gain / 3500
+    projected_weight = current_weight_lbs + net_weight_gain
+    return projected_weight
