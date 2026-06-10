@@ -53,6 +53,9 @@ def project_weight(
         days: int = 30
 ) -> float:
     net_caloric_gain = (average_daily_calories - estimated_tdee) * days
-    net_weight_gain = net_caloric_gain / 3500
-    projected_weight = current_weight_lbs + net_weight_gain
+
+    net_weight_gain_lbs = net_caloric_gain / 3500
+
+    projected_weight = current_weight_lbs + net_weight_gain_lbs
+    
     return projected_weight
