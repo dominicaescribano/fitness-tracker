@@ -84,3 +84,24 @@ def get_logs_for_user(
             (user_id, limit)
         )
         return result.fetchall()
+
+def get_or_create_user(
+        name: str,
+        goal: str = "maintain",
+        calorie_target: int = 2000,
+        protein_target: float = 150.0,
+        db_path: Path = Path("data/tracker.db")
+) -> int:
+    with get_db_connection(db_path) as conn:
+        result = conn.execute(
+            "SELECT id FROM users WHERE name = ?",
+            (name,)
+        )
+        existing = result.fetchone()
+        if existing:
+            return existing[0]
+        else:
+            cursor = conn.execute("INSERT INTO users (name, goal, calorie_target, protein_target) VALUES (?,?,?,?)",
+                                  (name, goal, calorie_target, protein_target)
+                                  )
+            return cursor.lastrowid
