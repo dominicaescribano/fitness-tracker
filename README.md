@@ -74,7 +74,7 @@ pytest -v
 
 ## How the TDEE estimate works
 
-Rather than using population-average formulas based on height, weight, and activity level (like Harris-Benedict), this app estimates the user's TDEE directly from their personal data.
+Rather than using population-average formulas based on height, weight, and activity level (like Harris-Benedict), the app estimates the user's TDEE directly from their personal data.
 
 The app tracks weekly change in weight from the user's 7-day rolling averages, combined with the average number of calories logged for those days. Assuming the 3,500 calories-per-pound energy model, the app will derive how many calories the user would need to level their weight trend. This means the estimate improves over time and reflects the user's actual metabolism. The confidence score reflects how much data is available for the estimate. Two weeks of data will result in a lower confidence score than four or more weeks of data.
 
@@ -86,4 +86,4 @@ The app uses a three-table SQLite schema that mirrors a simplified data warehous
 - **daily_log**: Raw daily entries (weight, calories, protein, steps)
 - **tdee_estimates**: Calculated analytics layer
 
-Raw data is never modified. Analytics are derived from it on read.
+Raw data is never modified; all analytics are derived on read.
