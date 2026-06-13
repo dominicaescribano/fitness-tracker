@@ -11,7 +11,7 @@ initialize_database()
 
 st.title("Fitness Tracker")
 
-user_name = st.selectbox("Who are you?", ["Dom", "Ari"])
+user_name = st.selectbox("Who are you?", ["Dom", "Ari","Tony"])
 user_id = get_or_create_user(user_name)
 
 tab1, tab2 = st.tabs(["Log today", "Dashboard"])
